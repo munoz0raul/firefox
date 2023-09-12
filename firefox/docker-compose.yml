@@ -1,0 +1,28 @@
+# firefox/docker-compose.yml
+version: '3.6'
+
+services:
+  firefox:
+#    image: hub.foundries.io/${FACTORY}/firefox:latest
+    image: firefox
+    restart: always
+    tty: true
+    network_mode: "host"
+    command: "--kiosk http://localhost:3000/d/wzkNnbxVz/environment-sensor-adlink?orgId=1&refresh=30s&kiosk=1"
+    tmpfs:
+      - /run
+      - /var/lock
+      - /var/log
+      - /tmp
+    volumes:
+      - /run/user/63:/run/user/63
+      - /dev/dri:/dev/dri
+      - /dev/galcore:/dev/galcore
+    device_cgroup_rules:
+      - 'c 226:* rmw'
+      - 'c 199:* rmw'
+    environment:
+      WAYLAND_USER: "weston"
+      XDG_RUNTIME_DIR: "/run/user/63"
+      WAYLAND_DISPLAY: "wayland-0"
+      TIMER: "0"

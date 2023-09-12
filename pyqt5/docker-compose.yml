@@ -1,0 +1,18 @@
+version: '3.6'
+
+services:
+  pyqt5:
+#    image: hub.foundries.io/ti-factory-d/pyqt5:latest
+    image: pyqt5
+    restart: always
+    network_mode: "host"
+    volumes:
+      - /run/user/63:/run/user/63
+      - /dev/dri:/dev/dri
+      - /dev/galcore:/dev/galcore
+    device_cgroup_rules:
+      - 'c 226:* rmw'
+      - 'c 199:* rmw'
+    environment:
+      QT_QPA_PLATFORM: "wayland"
+      WAYLAND_DISPLAY: "wayland-0"
